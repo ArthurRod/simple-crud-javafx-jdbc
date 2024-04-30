@@ -32,13 +32,12 @@ public class MainViewController implements Initializable{
 	
 	@FXML
 	public void onMenuItemDepartment() {
-		System.out.println("CLICOU");
-		
+		loadView("/gui/DepartmentView.fxml");
 	}
 	
 	@FXML
 	public void onMenuItemAbout() {
-		loadView("/gui/About.fxml");
+		loadView("/gui/AboutView.fxml");
 	}
 
 	@Override
