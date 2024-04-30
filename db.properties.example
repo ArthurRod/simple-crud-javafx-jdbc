@@ -1,4 +1,4 @@
 user=USUARIO_DO_BANCO_DE_DADOS
 password=SENHA_DO_BANCO_DE_DADOS
-dburl=jdbc:mysql://{ENDERECO_DO_BANCO_DE_DADOS}:{PORTA_DO_BANCO_DE_DADOS}/sellers_crud
+dburl=jdbc:mysql://{ENDERECO_DO_BANCO_DE_DADOS}:{PORTA_DO_BANCO_DE_DADOS}/simple_crud_javafx_jdbc
 useSSL=false

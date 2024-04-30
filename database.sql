@@ -1,3 +1,5 @@
+USE simple_crud_javafx_jdbc;
+
 CREATE TABLE department (
   Id int(11) NOT NULL AUTO_INCREMENT,
   Name varchar(60) DEFAULT NULL,
