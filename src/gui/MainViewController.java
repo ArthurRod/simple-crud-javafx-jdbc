@@ -25,6 +25,11 @@ public class MainViewController implements Initializable{
 	@FXML
 	private MenuItem menuItemAbout;
 	
+	@Override
+	public void initialize(URL uri, ResourceBundle rb) {
+		// TODO Auto-generated method stub
+	}
+	
 	@FXML
 	public void onMenuItemSeller() {
 		System.out.println("CLICOU");
@@ -38,11 +43,6 @@ public class MainViewController implements Initializable{
 	@FXML
 	public void onMenuItemAbout() {
 		loadView("/gui/AboutView.fxml");
-	}
-
-	@Override
-	public void initialize(URL uri, ResourceBundle rb) {
-		// TODO Auto-generated method stub
 	}
 	
 	private synchronized void loadView(String absoluteName) {
