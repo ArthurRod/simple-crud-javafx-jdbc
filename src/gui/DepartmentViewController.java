@@ -40,7 +40,7 @@ public class DepartmentViewController implements Initializable {
 	@FXML
 	private Button btNew;
 
-	private DepartmentService service;
+	private DepartmentService departmentService;
 
 	private ObservableList<Department> obsList;
 
@@ -63,27 +63,32 @@ public class DepartmentViewController implements Initializable {
 	@FXML
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		createDialogForm("/gui/DepartmentCreateForm.fxml", parentStage);
+		Department department = new Department();
+		createDialogForm(department, "/gui/DepartmentCreateForm.fxml", parentStage);
 	}
 
-	public void setService(DepartmentService service) {
-		this.service = service;
+	public void setDepartmentService(DepartmentService departmentService) {
+		this.departmentService = departmentService;
 	}
 
 	public void updateTableView() {
-		if (service == null) {
+		if (departmentService == null) {
 			throw new IllegalStateException("Service was null!");
 		}
 
-		List<Department> list = service.findAll();
+		List<Department> list = departmentService.findAll();
 		obsList = FXCollections.observableArrayList(list);
 		tableViewDepartment.setItems(obsList);
 	}
 
-	private void createDialogForm(String absoluteName, Stage parentStage) {
+	private void createDialogForm(Department department, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
+			
+			DepartmentCreateFormController controller = loader.getController();
+			controller.setDepartment(department);
+			controller.updateFormData();
 
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Enter Department data");
