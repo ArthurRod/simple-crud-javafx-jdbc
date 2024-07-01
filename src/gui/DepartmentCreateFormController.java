@@ -48,10 +48,10 @@ public class DepartmentCreateFormController implements Initializable {
 
 	@Override
 	public void initialize(URL uri, ResourceBundle rb) {
-		defineInputsLimits();
+		defineInputsMasks();
 	}
 
-	private void defineInputsLimits() {
+	private void defineInputsMasks() {
 		Constraints.setTextFieldInteger(txtId);
 		Constraints.setTextFieldMaxLength(txtName, 30);
 	}

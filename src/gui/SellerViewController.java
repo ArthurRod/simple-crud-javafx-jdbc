@@ -33,6 +33,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Seller;
+import model.services.DepartmentService;
 import model.services.SellerService;
 
 public class SellerViewController implements Initializable, DataChangeListener {
@@ -45,13 +46,13 @@ public class SellerViewController implements Initializable, DataChangeListener {
 
 	@FXML
 	private TableColumn<Seller, String> tableColumnName;
-	
+
 	@FXML
 	private TableColumn<Seller, String> tableColumnEmail;
-	
+
 	@FXML
 	private TableColumn<Seller, Date> tableColumnBirthDate;
-	
+
 	@FXML
 	private TableColumn<Seller, Double> tableColumnBaseSalary;
 
@@ -120,7 +121,8 @@ public class SellerViewController implements Initializable, DataChangeListener {
 
 			SellerCreateFormController controller = loader.getController();
 			controller.setSeller(seller);
-			controller.setSellerService(new SellerService());
+			controller.setServices(new SellerService(), new DepartmentService());
+			controller.loadAssociatedObjects();
 			controller.subscribeDataChangeListener(this);
 			controller.updateFormData();
 
@@ -152,8 +154,8 @@ public class SellerViewController implements Initializable, DataChangeListener {
 					return;
 				}
 
-				button.setOnAction(event -> createDialogForm(seller, "/gui/SellerCreateForm.fxml",
-						Utils.currentStage(event)));
+				button.setOnAction(
+						event -> createDialogForm(seller, "/gui/SellerCreateForm.fxml", Utils.currentStage(event)));
 				HBox.setMargin(button, new Insets(0, 0, 0, 3));
 
 				setGraphic(hbox);
