@@ -19,11 +19,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import model.entities.Department;
+import model.entities.Seller;
 import model.exceptions.ValidationException;
-import model.services.DepartmentService;
+import model.services.SellerService;
 
-public class DepartmentCreateFormController implements Initializable {
+public class SellerCreateFormController implements Initializable {
 
 	@FXML
 	private TextField txtId;
@@ -40,9 +40,9 @@ public class DepartmentCreateFormController implements Initializable {
 	@FXML
 	private Button btCancel;
 
-	private Department department;
+	private Seller seller;
 
-	private DepartmentService departmentService;
+	private SellerService sellerService;
 
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
@@ -58,15 +58,15 @@ public class DepartmentCreateFormController implements Initializable {
 
 	@FXML
 	public void onBtSaveAction(ActionEvent event) {
-		if (department == null) {
-			throw new IllegalStateException("Department was null!");
+		if (seller == null) {
+			throw new IllegalStateException("Seller was null!");
 		}
-		if (departmentService == null) {
+		if (sellerService == null) {
 			throw new IllegalStateException("Service was null!");
 		}
 		try {
-			department = getFormData();
-			departmentService.saveOrUpdate(department);
+			seller = getFormData();
+			sellerService.saveOrUpdate(seller);
 			notifyDataChangeListeners();
 			Utils.currentStage(event).close();
 		} catch (ValidationException e) {
@@ -82,37 +82,37 @@ public class DepartmentCreateFormController implements Initializable {
 		Utils.currentStage(event).close();
 	}
 
-	public void setDepartment(Department department) {
-		this.department = department;
+	public void setSeller(Seller seller) {
+		this.seller = seller;
 	}
 
-	public void setDepartmentService(DepartmentService departmentService) {
-		this.departmentService = departmentService;
+	public void setSellerService(SellerService sellerService) {
+		this.sellerService = sellerService;
 	}
 
-	private Department getFormData() {
+	private Seller getFormData() {
 		ValidationException exception = new ValidationException("Validation Error");
-		Department department = new Department();
+		Seller seller = new Seller();
 
-		department.setId(Utils.tryParseToInt(txtId.getText()));
+		seller.setId(Utils.tryParseToInt(txtId.getText()));
 
 		if (txtName.getText() == null || txtName.getText().trim().equals("")) {
 			exception.addError("name", "Name can't be empty");
 		}
-		department.setName(txtName.getText());
+		seller.setName(txtName.getText());
 
 		if (exception.getErrors().size() > 0) {
 			throw exception;
 		}
-		return department;
+		return seller;
 	}
 
 	public void updateFormData() {
-		if (department == null) {
-			throw new IllegalStateException("Department was null!");
+		if (seller == null) {
+			throw new IllegalStateException("Seller was null!");
 		}
-		txtId.setText(String.valueOf(department.getId()));
-		txtName.setText(department.getName());
+		txtId.setText(String.valueOf(seller.getId()));
+		txtName.setText(seller.getName());
 	}
 
 	public void subscribeDataChangeListener(DataChangeListener listener) {
