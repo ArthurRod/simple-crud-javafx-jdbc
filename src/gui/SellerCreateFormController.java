@@ -1,8 +1,11 @@
 package gui;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -17,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.entities.Seller;
@@ -32,7 +36,25 @@ public class SellerCreateFormController implements Initializable {
 	private TextField txtName;
 
 	@FXML
+	private TextField txtEmail;
+
+	@FXML
+	private DatePicker dpBirthDate;
+
+	@FXML
+	private TextField txtBaseSalary;
+
+	@FXML
 	private Label labelErrorName;
+
+	@FXML
+	private Label labelErrorEmail;
+
+	@FXML
+	private Label labelErrorBirthDate;
+
+	@FXML
+	private Label labelErrorBaseSalary;
 
 	@FXML
 	private Button btSave;
@@ -53,7 +75,10 @@ public class SellerCreateFormController implements Initializable {
 
 	private void defineInputsLimits() {
 		Constraints.setTextFieldInteger(txtId);
-		Constraints.setTextFieldMaxLength(txtName, 30);
+		Constraints.setTextFieldMaxLength(txtName, 70);
+		Constraints.setTextFieldMaxLength(txtEmail, 60);
+		Constraints.setTextFieldDouble(txtBaseSalary);
+		Utils.formatDatePicker(dpBirthDate, "dd/MM/yyyy");
 	}
 
 	@FXML
@@ -111,8 +136,18 @@ public class SellerCreateFormController implements Initializable {
 		if (seller == null) {
 			throw new IllegalStateException("Seller was null!");
 		}
+		Locale.setDefault(Locale.US);
+		String convertedBaseSalary = String.format("%.2f", seller.getBaseSalary());
+
 		txtId.setText(String.valueOf(seller.getId()));
 		txtName.setText(seller.getName());
+		txtEmail.setText(seller.getEmail());
+		txtBaseSalary.setText(convertedBaseSalary);
+
+		if (seller.getBirthDate() != null) {
+			LocalDate localeBirthDate = LocalDate.ofInstant(seller.getBirthDate().toInstant(), ZoneId.systemDefault());
+			dpBirthDate.setValue(localeBirthDate);
+		}
 	}
 
 	public void subscribeDataChangeListener(DataChangeListener listener) {
